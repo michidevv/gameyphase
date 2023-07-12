@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.1" name="dungeon" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
- <image source="dungeon-16-16.png" width="512" height="512"/>
+ <image source="../../public/assets/tilemaps/tiles/dungeon-16-16.png" width="512" height="512"/>
  <tile id="0">
   <properties>
    <property name="collides" type="bool" value="false"/>
@@ -183,17 +183,17 @@
  </tile>
  <tile id="36">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="37">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="38">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="39">
@@ -328,12 +328,12 @@
  </tile>
  <tile id="65">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="66">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="67">
@@ -488,12 +488,12 @@
  </tile>
  <tile id="97">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="98">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="99">
@@ -503,17 +503,17 @@
  </tile>
  <tile id="100">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="101">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="102">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="103">
@@ -1314,7 +1314,7 @@
  </tile>
  <tile id="261">
   <properties>
-   <property name="collides" type="bool" value="false"/>
+   <property name="collides" type="bool" value="true"/>
   </properties>
   <objectgroup draworder="index" id="3">
    <object id="2" x="0.481881" y="0.662587" width="4.51764" height="14.9383"/>
@@ -1623,7 +1623,7 @@
  </tile>
  <tile id="322">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="323">
@@ -1633,7 +1633,7 @@
  </tile>
  <tile id="324">
   <properties>
-   <property name="collides" type="bool" value="false"/>
+   <property name="collides" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="325">
@@ -2263,12 +2263,12 @@
  </tile>
  <tile id="450">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="451">
   <properties>
-   <property name="collides" type="bool" value="true"/>
+   <property name="collides" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="452">

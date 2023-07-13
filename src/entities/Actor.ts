@@ -13,6 +13,7 @@ export class Actor extends Physics.Arcade.Sprite {
     super(scene, x, y, texture, frame);
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.getBody().setAllowGravity(false);
   }
 
   getDamage(value?: number) {
@@ -22,12 +23,12 @@ export class Actor extends Physics.Arcade.Sprite {
       repeat: 3,
       yoyo: true,
       alpha: 0.5,
-      onStart() {
+      onStart: () => {
         if (value) {
           this.hp -= value;
         }
       },
-      onComplete() {
+      onComplete: () => {
         this.setAlpha(1);
       },
     });

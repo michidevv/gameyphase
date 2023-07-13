@@ -25,7 +25,6 @@ export class Player extends Actor {
     const body = this.getBody();
     body.setSize(30, 30);
     body.setOffset(8, 0);
-    body.setAllowGravity(false);
 
     this.initAnimation();
   }

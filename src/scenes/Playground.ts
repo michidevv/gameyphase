@@ -2,6 +2,7 @@ import { Scene, Tilemaps } from "phaser";
 import { Player } from "../entities/Player";
 import { ObjectPoint } from "../types/ObjectPoint";
 import { emitEvent } from "../utils/event";
+import { Enemy } from "../entities/Enemy";
 
 export class PlaygroundScene extends Scene {
   private player!: Player;
@@ -10,6 +11,7 @@ export class PlaygroundScene extends Scene {
   private groundLayer!: Tilemaps.TilemapLayer;
   private wallsLayer!: Tilemaps.TilemapLayer;
   private chests!: Phaser.GameObjects.Sprite[];
+  private enemies!: Enemy[];
 
   constructor() {
     super("playground-scene");
@@ -40,6 +42,11 @@ export class PlaygroundScene extends Scene {
     });
   }
 
+  private initPlayer() {
+    this.player = new Player(this, 200, 300);
+    this.physics.add.collider(this.player, this.wallsLayer);
+  }
+
   private initMap() {
     this.map = this.make.tilemap({
       key: "dungeon",
@@ -68,6 +75,24 @@ export class PlaygroundScene extends Scene {
     this.showDebugWalls();
   }
 
+  private initEnemies() {
+    const enemyPoints = this.map.filterObjects(
+      "Enemies",
+      (o) => o.name === "EnemyPoint"
+    ) as ObjectPoint[];
+
+    this.enemies = enemyPoints.map((p) =>
+      new Enemy(this.player, this, p.x, p.y, "tiles_spr", 251)
+        .setName(p.id.toString())
+        .setScale(1.5)
+    );
+    this.physics.add.collider(this.enemies, this.wallsLayer);
+    this.physics.add.collider(this.enemies, this.enemies);
+    this.physics.add.collider(this.player, this.enemies, (p) =>
+      (p as Player).getDamage(1)
+    );
+  }
+
   private showDebugWalls() {
     const debugGraphics = this.add.graphics().setAlpha(0.7);
     this.wallsLayer.renderDebug(debugGraphics, {
@@ -78,13 +103,13 @@ export class PlaygroundScene extends Scene {
 
   create() {
     this.initMap();
-    this.player = new Player(this, 200, 150);
-    this.physics.add.collider(this.player, this.wallsLayer);
+    this.initPlayer();
+    this.initEnemies();
     this.initChests();
     this.initCamera();
   }
 
-  update(time: number, delta: number): void {
+  update() {
     this.player.update();
   }
 }

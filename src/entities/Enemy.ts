@@ -13,9 +13,6 @@ export class Enemy extends Actor {
   ) {
     super(scene, x, y, texture, frame);
 
-    // scene.add.existing(this);
-    // scene.physics.add.existing(this);
-
     this.getBody().setSize(16, 16);
     this.getBody().setOffset(0, 0);
   }

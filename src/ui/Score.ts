@@ -10,7 +10,6 @@ export class Score extends Text {
     private scoreValue = 0
   ) {
     super(scene, x, y, `Score: ${scoreValue}`);
-    // scene.add.existing(this);
   }
 
   changeValue(op: ScoreOp, value: number) {

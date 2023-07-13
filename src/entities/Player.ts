@@ -1,3 +1,4 @@
+import { Text } from "../ui/Text";
 import { Actor } from "./Actor";
 
 const VELOCITY = 130;
@@ -7,8 +8,10 @@ export class Player extends Actor {
     Phaser.Input.Keyboard.Key | undefined
   >;
 
+  private hpValue: Text;
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, "king");
+    super(scene, x, y, "a-king");
 
     const keyboard = this.scene.input.keyboard;
     if (!keyboard) {
@@ -22,14 +25,29 @@ export class Player extends Actor {
       D: keyboard?.addKey("D"),
     };
 
-    const body = this.getBody();
-    body.setSize(30, 30);
-    body.setOffset(8, 0);
+    this.getBody().setSize(30, 30);
+    this.getBody().setOffset(8, 0);
 
     this.initAnimation();
+
+    this.hpValue = new Text(
+      this.scene,
+      this.x,
+      this.y - this.height * 0.4,
+      this.hp.toString()
+    ).setFontSize(12);
   }
 
   private initAnimation() {
+    this.scene.anims.create({
+      key: "idle",
+      frames: this.scene.anims.generateFrameNames("a-king", {
+        prefix: "idle-",
+        end: 0,
+      }),
+      frameRate: 8,
+    });
+
     this.scene.anims.create({
       key: "run",
       frames: this.scene.anims.generateFrameNames("a-king", {
@@ -78,7 +96,16 @@ export class Player extends Actor {
     ) {
       this.anims.isPlaying || this.anims.play("run", true);
     } else {
-      this.anims.stop();
+      this.anims.isPlaying || this.anims.play("idle", true);
     }
+
+    this.hpValue
+      .setPosition(this.x, this.y - this.height * 0.4)
+      .setOrigin(0.8, 0.5);
+  }
+
+  getDamage(value?: number): void {
+    super.getDamage(value);
+    this.hpValue.setText(this.hp.toString());
   }
 }

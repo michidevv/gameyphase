@@ -35,7 +35,7 @@ export class Player extends Actor {
       this.x,
       this.y - this.height * 0.4,
       this.hp.toString()
-    ).setFontSize(12);
+    ).setFontSize(9);
   }
 
   private initAnimation() {

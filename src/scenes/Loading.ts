@@ -24,5 +24,6 @@ export class LoadingScene extends Phaser.Scene {
 
   create() {
     this.scene.start("playground-scene");
+    this.scene.start("hud-scene");
   }
 }

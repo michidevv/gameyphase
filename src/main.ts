@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { LoadingScene } from "./scenes/Loading";
 import { PlaygroundScene } from "./scenes/Playground";
+import { HudScene } from "./scenes/Hud";
 
 const config: Phaser.Types.Core.GameConfig = {
   parent: "app",
@@ -21,7 +22,7 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 200 },
     },
   },
-  scene: [LoadingScene, PlaygroundScene],
+  scene: [LoadingScene, PlaygroundScene, HudScene],
 };
 
 export default new Phaser.Game(config);

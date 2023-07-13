@@ -1,6 +1,7 @@
 import { Scene, Tilemaps } from "phaser";
 import { Player } from "../entities/Player";
 import { ObjectPoint } from "../types/ObjectPoint";
+import { emitEvent } from "../utils/event";
 
 export class PlaygroundScene extends Scene {
   private player!: Player;
@@ -12,6 +13,11 @@ export class PlaygroundScene extends Scene {
 
   constructor() {
     super("playground-scene");
+  }
+
+  private initCamera() {
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.setZoom(2);
   }
 
   private initChests() {
@@ -27,6 +33,7 @@ export class PlaygroundScene extends Scene {
       chest.body.setAllowGravity(false);
       this.physics.add.overlap(this.player, chest, (_, ch) => {
         ch.destroy();
+        emitEvent(this.game.events, { type: "chest-loot" });
         this.cameras.main.flash(200);
       });
       return chest;
@@ -73,8 +80,8 @@ export class PlaygroundScene extends Scene {
     this.initMap();
     this.player = new Player(this, 200, 150);
     this.physics.add.collider(this.player, this.wallsLayer);
-    console.log("create");
     this.initChests();
+    this.initCamera();
   }
 
   update(time: number, delta: number): void {

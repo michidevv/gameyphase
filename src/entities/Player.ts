@@ -96,7 +96,7 @@ export class Player extends Actor {
     ) {
       this.anims.isPlaying || this.anims.play("run", true);
     } else {
-      this.anims.isPlaying || this.anims.play("idle", true);
+      this.anims.play("idle", true);
     }
 
     this.hpValue

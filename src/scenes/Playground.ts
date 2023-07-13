@@ -1,5 +1,6 @@
 import { Scene, Tilemaps } from "phaser";
 import { Player } from "../entities/Player";
+import { ObjectPoint } from "../types/ObjectPoint";
 
 export class PlaygroundScene extends Scene {
   private player!: Player;
@@ -7,9 +8,29 @@ export class PlaygroundScene extends Scene {
   private tileset!: Tilemaps.Tileset;
   private groundLayer!: Tilemaps.TilemapLayer;
   private wallsLayer!: Tilemaps.TilemapLayer;
+  private chests!: Phaser.GameObjects.Sprite[];
 
   constructor() {
     super("playground-scene");
+  }
+
+  private initChests() {
+    const chestPoints = this.map.filterObjects(
+      "Chests",
+      (o) => o.name === "ChestPoint"
+    ) as ObjectPoint[];
+
+    this.chests = chestPoints.map((p) => {
+      const chest = this.physics.add
+        .sprite(p.x, p.y, "tiles_spr", 595)
+        .setScale(1.5);
+      chest.body.setAllowGravity(false);
+      this.physics.add.overlap(this.player, chest, (_, ch) => {
+        ch.destroy();
+        this.cameras.main.flash(200);
+      });
+      return chest;
+    });
   }
 
   private initMap() {
@@ -52,6 +73,8 @@ export class PlaygroundScene extends Scene {
     this.initMap();
     this.player = new Player(this, 200, 150);
     this.physics.add.collider(this.player, this.wallsLayer);
+    console.log("create");
+    this.initChests();
   }
 
   update(time: number, delta: number): void {

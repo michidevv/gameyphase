@@ -14,6 +14,12 @@ export function emitEvent(
     case "attack":
       emitter.emit(event.type);
       break;
+    case "show-text-dialog":
+      emitter.emit(event.type, event.data);
+      break;
+    case "hide-text-dialog":
+      emitter.emit(event.type);
+      break;
     default:
       console.warn("Unknown event", event);
       break;

@@ -1,6 +1,10 @@
-export function attachTouchListener(cb: () => void) {
-  window.addEventListener("touchstart", function listener() {
+export function attachTouchListener(cb: () => void): () => void {
+  function listener() {
     cb();
     window.removeEventListener("touchstart", listener);
-  });
+  }
+
+  window.addEventListener("touchstart", listener);
+
+  return () => window.removeEventListener("touchstart", listener);
 }

@@ -6,6 +6,7 @@ import { Enemy } from "../entities/Enemy";
 import { VirtualJoyStick } from "../types/VirtualJoyStick";
 import { SCENES } from "./scenes";
 import { attachTouchListener } from "../utils/touchDetector";
+import { COLORS } from "../ui/colors";
 
 export class PlaygroundScene extends Scene {
   private player!: Player;
@@ -37,11 +38,33 @@ export class PlaygroundScene extends Scene {
         .sprite(p.x, p.y, "tiles_spr", 595)
         .setScale(1.5);
       chest.body.setAllowGravity(false);
-      this.physics.add.overlap(this.player, chest, (_, ch) => {
-        ch.destroy();
-        emitEvent(this.game.events, { type: "chest-loot" });
-        this.cameras.main.flash(200);
+      const collider = this.physics.add.overlap(this.player, chest, () => {
+        // emitEvent(this.game.events, { type: "chest-loot" });
+        // this.cameras.main.flash(200);
+        chest.setTexture("tiles_spr", 597);
+        collider.active = false;
+        emitEvent(this.game.events, {
+          type: "show-text-dialog",
+          data: { text: "Test dialog text" },
+        });
+        const timer = this.time.addEvent({
+          delay: 1000,
+          loop: true,
+          callback: () => {
+            if (
+              !Phaser.Geom.Rectangle.Overlaps(
+                this.player.getBounds(),
+                chest.getBounds()
+              )
+            ) {
+              timer.destroy();
+              emitEvent(this.game.events, { type: "hide-text-dialog" });
+              collider.active = true;
+            }
+          },
+        });
       });
+
       return chest;
     });
   }
@@ -58,8 +81,8 @@ export class PlaygroundScene extends Scene {
       x: this.cameras.main.displayWidth / 2 + 60,
       y:
         this.cameras.main.displayHeight + this.cameras.main.displayHeight / 3.5,
-      base: this.add.circle(0, 0, radius, 0x888888, 0.3),
-      thumb: this.add.circle(0, 0, radius / 2, 0xcccccc, 0.4),
+      base: this.add.circle(0, 0, radius, COLORS.grey, 0.3),
+      thumb: this.add.circle(0, 0, radius / 2, COLORS.lightGrey, 0.4),
     });
     this.virtualJoystick?.setVisible(false);
   }

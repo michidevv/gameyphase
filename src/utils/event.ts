@@ -11,6 +11,9 @@ export function emitEvent(
     case "game-end":
       emitter.emit(event.type, event.data);
       break;
+    case "attack":
+      emitter.emit(event.type);
+      break;
     default:
       console.warn("Unknown event", event);
       break;
@@ -25,4 +28,12 @@ export function attachListener(
   ctx: OnParams[2]
 ) {
   emitter.on(eventType, fn, ctx);
+}
+
+export function detachListener(
+  emitter: Phaser.Events.EventEmitter,
+  eventType: GameEvent["type"],
+  fn: Parameters<Phaser.Events.EventEmitter["removeListener"]>[1]
+) {
+  emitter.removeListener(eventType, fn);
 }

@@ -1,12 +1,15 @@
 import { Text } from "../ui/Text";
+import { emitEvent } from "../utils/event";
 import { Actor } from "./Actor";
 
 const VELOCITY = 130;
 export class Player extends Actor {
   private keys!: Record<
-    "W" | "A" | "S" | "D",
+    "W" | "A" | "S" | "D" | "Space",
     Phaser.Input.Keyboard.Key | undefined
   >;
+
+  private playerState: "idle" | "run" | "attack" = "idle";
 
   private hpValue: Text;
 
@@ -23,12 +26,18 @@ export class Player extends Actor {
       A: keyboard?.addKey("A"),
       S: keyboard?.addKey("S"),
       D: keyboard?.addKey("D"),
+      Space: keyboard?.addKey("SPACE"),
     };
 
     this.getBody().setSize(30, 30);
     this.getBody().setOffset(8, 0);
 
     this.initAnimation();
+
+    this.keys.Space?.on("down", () => {
+      this.setPlayerState("attack");
+      emitEvent(this.scene.game.events, { type: "attack" });
+    });
 
     this.hpValue = new Text(
       this.scene,
@@ -67,6 +76,29 @@ export class Player extends Actor {
     });
   }
 
+  private setPlayerState(nextState: typeof this.playerState) {
+    switch (nextState) {
+      case "idle": {
+        if (this.playerState === "attack" && this.anims.isPlaying) {
+          return;
+        } else {
+          this.playerState = "idle";
+          this.anims.play("idle", true);
+        }
+        break;
+      }
+      case "run": {
+        this.playerState = "run";
+        this.anims.isPlaying || this.anims.play("run", true);
+        break;
+      }
+      case "attack": {
+        this.playerState = "attack";
+        this.anims.play("attack", true);
+      }
+    }
+  }
+
   update() {
     this.getBody().setVelocity(0);
     if (this.keys.W?.isDown) {
@@ -94,9 +126,9 @@ export class Player extends Actor {
       this.keys.S?.isDown ||
       this.keys.W?.isDown
     ) {
-      this.anims.isPlaying || this.anims.play("run", true);
+      this.setPlayerState("run");
     } else {
-      this.anims.play("idle", true);
+      this.setPlayerState("idle");
     }
 
     this.hpValue

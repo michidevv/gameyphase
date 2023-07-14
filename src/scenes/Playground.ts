@@ -48,11 +48,13 @@ export class PlaygroundScene extends Scene {
 
       chest.body.setAllowGravity(false);
       const collider = this.physics.add.overlap(this.player, chest, () => {
-        // TODO: Need to fix, emit only once per chest
-        emitEvent(this.game.events, { type: "chest-found" });
-        chest.setTexture("tiles_spr", 597);
+        if (!chest.getData("found")) {
+          chest.setData("found", true);
+          emitEvent(this.game.events, { type: "chest-found" });
+          chest.setTexture("tiles_spr", 597);
+          this.chestLights[i]?.setIntensity(0);
+        }
         collider.active = false;
-        this.chestLights[i]?.setIntensity(0);
 
         emitEvent(this.game.events, {
           type: "show-text-dialog",

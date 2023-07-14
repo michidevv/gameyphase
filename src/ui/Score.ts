@@ -14,7 +14,7 @@ export class Score extends Text {
       scene,
       x,
       y,
-      getTranslation("score", { value: scoreValue.toString() })
+      getTranslation("score", { value: scoreValue.toString(), total: "4" })
     );
   }
 
@@ -35,7 +35,7 @@ export class Score extends Text {
     }
 
     this.setText(
-      getTranslation("score", { value: this.scoreValue.toString() })
+      getTranslation("score", { value: this.scoreValue.toString(), total: "4" })
     );
   }
 

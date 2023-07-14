@@ -139,5 +139,11 @@ export class Player extends Actor {
   getDamage(value?: number): void {
     super.getDamage(value);
     this.hpValue.setText(this.hp.toString());
+    if (this.hp <= 0) {
+      emitEvent(this.scene.game.events, {
+        type: "game-end",
+        data: { status: "lose" },
+      });
+    }
   }
 }

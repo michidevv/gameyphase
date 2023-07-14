@@ -3,6 +3,9 @@ import { Player } from "../entities/Player";
 import { ObjectPoint } from "../types/ObjectPoint";
 import { emitEvent } from "../utils/event";
 import { Enemy } from "../entities/Enemy";
+import { VirtualJoyStick } from "../types/VirtualJoyStick";
+import { SCENES } from "./scenes";
+import { attachTouchListener } from "../utils/touchDetector";
 
 export class PlaygroundScene extends Scene {
   private player!: Player;
@@ -12,13 +15,14 @@ export class PlaygroundScene extends Scene {
   private wallsLayer!: Tilemaps.TilemapLayer;
   private chests!: Phaser.GameObjects.Sprite[];
   private enemies!: Enemy[];
+  private virtualJoystick?: VirtualJoyStick;
 
   constructor() {
-    super("playground-scene");
+    super(SCENES.playground);
+    attachTouchListener(() => this.virtualJoystick?.setVisible(true));
   }
 
   private initCamera() {
-    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
     this.cameras.main.setZoom(2);
   }
 
@@ -42,9 +46,33 @@ export class PlaygroundScene extends Scene {
     });
   }
 
+  private initTouchControls() {
+    const joystickPlugin = this.plugins.get("rexvirtualjoystickplugin");
+    if (!joystickPlugin) {
+      return;
+    }
+
+    const radius = 40;
+    this.virtualJoystick = (joystickPlugin as any).add(this, {
+      radius,
+      x: this.cameras.main.displayWidth / 2 + 60,
+      y:
+        this.cameras.main.displayHeight + this.cameras.main.displayHeight / 3.5,
+      base: this.add.circle(0, 0, radius, 0x888888, 0.3),
+      thumb: this.add.circle(0, 0, radius / 2, 0xcccccc, 0.4),
+    });
+    this.virtualJoystick?.setVisible(false);
+  }
+
   private initPlayer() {
-    this.player = new Player(this, 200, 300);
+    this.player = new Player(
+      this,
+      200,
+      300,
+      this.virtualJoystick?.createCursorKeys()
+    );
     this.physics.add.collider(this.player, this.wallsLayer);
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
   }
 
   private initMap() {
@@ -103,10 +131,11 @@ export class PlaygroundScene extends Scene {
 
   create() {
     this.initMap();
+    this.initCamera();
+    this.initTouchControls();
     this.initPlayer();
     this.initEnemies();
     this.initChests();
-    this.initCamera();
   }
 
   update() {

@@ -3,6 +3,7 @@ import { Score } from "../ui/Score";
 import { attachListener, detachListener, emitEvent } from "../utils/event";
 import { Text } from "../ui/Text";
 import { GameEndStatus } from "../types/GameEvent";
+import { SCENES } from "./scenes";
 
 export class HudScene extends Scene {
   private score!: Score;
@@ -18,7 +19,7 @@ export class HudScene extends Scene {
   };
   private gameEndHandler = ({ status }: { status: GameEndStatus }) => {
     this.cameras.main.setBackgroundColor("rgba(0,0,0,0.6)");
-    this.game.scene.pause("playground-scene");
+    this.game.scene.pause(SCENES.playground);
     new Text(
       this,
       this.game.scale.width / 3,
@@ -33,13 +34,13 @@ export class HudScene extends Scene {
     this.input.keyboard?.on("keydown-R", () => {
       detachListener(this.game.events, "chest-loot", this.chestLootHandler);
       detachListener(this.game.events, "game-end", this.gameEndHandler);
-      this.scene.get("playground-scene").scene.restart();
+      this.scene.get(SCENES.playground).scene.restart();
       this.scene.restart();
     });
   };
 
   constructor() {
-    super("hud-scene");
+    super(SCENES.hud);
   }
 
   create() {

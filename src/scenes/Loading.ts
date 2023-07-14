@@ -1,6 +1,8 @@
+import { SCENES } from "./scenes";
+
 export class LoadingScene extends Phaser.Scene {
   constructor() {
-    super("loading-scene");
+    super(SCENES.loading);
   }
 
   preload() {
@@ -19,10 +21,14 @@ export class LoadingScene extends Phaser.Scene {
       frameHeight: 16,
       frameWidth: 16,
     });
+    this.load.plugin(
+      "rexvirtualjoystickplugin",
+      "scripts/rexvirtualjoystickplugin.min.js"
+    );
   }
 
   create() {
-    this.scene.start("playground-scene");
-    this.scene.start("hud-scene");
+    this.scene.start(SCENES.playground);
+    this.scene.start(SCENES.hud);
   }
 }

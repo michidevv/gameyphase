@@ -15,6 +15,7 @@ export class PlaygroundScene extends Scene {
   private groundLayer!: Tilemaps.TilemapLayer;
   private wallsLayer!: Tilemaps.TilemapLayer;
   private chests!: Phaser.GameObjects.Sprite[];
+  private chestLights!: Phaser.GameObjects.Light[];
   private enemies!: Enemy[];
   private virtualJoystick?: VirtualJoyStick;
 
@@ -27,6 +28,15 @@ export class PlaygroundScene extends Scene {
     this.cameras.main.setZoom(2);
   }
 
+  private initLight() {
+    this.groundLayer.setPipeline("Light2D");
+    this.lights.enable().setAmbientColor(0xffffff);
+
+    this.chestLights = this.chests.map((c) =>
+      this.lights.addLight(c.x, c.y, 40).setIntensity(2).setOrigin(0, 0)
+    );
+  }
+
   private initChests() {
     const chestPoints = this.map.filterObjects(
       "Chests",
@@ -37,16 +47,19 @@ export class PlaygroundScene extends Scene {
       const chest = this.physics.add
         .sprite(p.x, p.y, "tiles_spr", 595)
         .setScale(1.5);
+
       chest.body.setAllowGravity(false);
       const collider = this.physics.add.overlap(this.player, chest, () => {
         // emitEvent(this.game.events, { type: "chest-loot" });
-        // this.cameras.main.flash(200);
         chest.setTexture("tiles_spr", 597);
         collider.active = false;
+        this.chestLights[i]?.setIntensity(0);
+
         emitEvent(this.game.events, {
           type: "show-text-dialog",
           data: { text: `note_${i + 1}` },
         });
+
         const timer = this.time.addEvent({
           delay: 1000,
           loop: true,
@@ -159,6 +172,7 @@ export class PlaygroundScene extends Scene {
     this.initPlayer();
     this.initEnemies();
     this.initChests();
+    this.initLight();
   }
 
   update() {

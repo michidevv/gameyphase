@@ -7,7 +7,6 @@ export function emitEvent(
   switch (event.type) {
     case "chest-found":
     case "game-completed":
-    case "attack":
     case "hide-text-dialog":
       emitter.emit(event.type);
       break;

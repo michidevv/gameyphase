@@ -33,10 +33,12 @@ export class HudScene extends Scene {
     this.game.scene.pause(SCENES.playground);
     new Text(
       this,
-      this.game.scale.width / 3,
+      this.game.scale.width / 2,
       this.game.scale.height * 0.2,
       getTranslation("game_completed")
-    ).setAlign("center");
+    )
+      .setAlign("center")
+      .setOrigin(0.5);
 
     this.input.once("pointerdown", () => {
       detachListener(this.game.events, "chest-found", this.chestLootHandler);

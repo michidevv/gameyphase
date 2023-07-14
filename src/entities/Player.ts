@@ -1,15 +1,14 @@
 import { VJoystickCursorKeys } from "../types/VirtualJoyStick";
-import { emitEvent } from "../utils/event";
 import { Actor } from "./Actor";
 
 const VELOCITY = 130;
 export class Player extends Actor {
   private keys!: Record<
-    "W" | "A" | "S" | "D" | "Space",
+    "W" | "A" | "S" | "D",
     Phaser.Input.Keyboard.Key | undefined
   >;
 
-  private playerState: "idle" | "run" | "attack" = "idle";
+  private playerState: "idle" | "run" = "idle";
 
   constructor(
     scene: Phaser.Scene,
@@ -17,7 +16,7 @@ export class Player extends Actor {
     y: number,
     private cursorKeys?: VJoystickCursorKeys
   ) {
-    super(scene, x, y, "a-king");
+    super(scene, x, y, "tiles_spr_char");
 
     const keyboard = this.scene.input.keyboard;
     if (!keyboard && !cursorKeys) {
@@ -29,29 +28,23 @@ export class Player extends Actor {
       A: keyboard?.addKey("A"),
       S: keyboard?.addKey("S"),
       D: keyboard?.addKey("D"),
-      Space: keyboard?.addKey("SPACE"),
     };
 
-    this.getBody().setSize(30, 30);
-    this.getBody().setOffset(8, 0);
+    this.getBody().setSize(16, 20);
 
     this.initAnimation();
 
-    this.keys.Space?.on("down", () => {
-      this.setPlayerState("attack");
-      emitEvent(this.scene.game.events, { type: "attack" });
-    });
-
     this.setDepth(1);
+    this.spriteScale = 1.5;
+    this.setScale(this.spriteScale);
   }
 
   private initAnimation() {
     if (!this.scene.anims.exists("idle")) {
       this.scene.anims.create({
         key: "idle",
-        frames: this.scene.anims.generateFrameNames("a-king", {
-          prefix: "idle-",
-          end: 0,
+        frames: this.scene.anims.generateFrameNumbers("tiles_spr_char", {
+          frames: [72],
         }),
         frameRate: 8,
       });
@@ -60,20 +53,8 @@ export class Player extends Actor {
     if (!this.scene.anims.exists("run")) {
       this.scene.anims.create({
         key: "run",
-        frames: this.scene.anims.generateFrameNames("a-king", {
-          prefix: "run-",
-          end: 7,
-        }),
-        frameRate: 8,
-      });
-    }
-
-    if (!this.scene.anims.exists("attack")) {
-      this.scene.anims.create({
-        key: "attack",
-        frames: this.scene.anims.generateFrameNames("a-king", {
-          prefix: "attack-",
-          end: 2,
+        frames: this.scene.anims.generateFrameNumbers("tiles_spr_char", {
+          frames: [72, 73, 74, 75],
         }),
         frameRate: 8,
       });
@@ -83,22 +64,14 @@ export class Player extends Actor {
   private setPlayerState(nextState: typeof this.playerState) {
     switch (nextState) {
       case "idle": {
-        if (this.playerState === "attack" && this.anims.isPlaying) {
-          return;
-        } else {
-          this.playerState = "idle";
-          this.anims.play("idle", true);
-        }
+        this.playerState = "idle";
+        this.anims.play("idle", true);
         break;
       }
       case "run": {
         this.playerState = "run";
         this.anims.isPlaying || this.anims.play("run", true);
         break;
-      }
-      case "attack": {
-        this.playerState = "attack";
-        this.anims.play("attack", true);
       }
     }
   }
@@ -128,7 +101,7 @@ export class Player extends Actor {
     if (this.isLeft()) {
       this.body!.velocity.x = -VELOCITY;
       this.checkFlip();
-      this.getBody().setOffset(48, 15);
+      this.getBody().setOffset(16, 12);
     }
 
     if (this.isDown()) {
@@ -138,7 +111,7 @@ export class Player extends Actor {
     if (this.isRight()) {
       this.body!.velocity.x = VELOCITY;
       this.checkFlip();
-      this.getBody().setOffset(15, 15);
+      this.getBody().setOffset(0, 12);
     }
     if (this.isUp() || this.isLeft() || this.isDown() || this.isRight()) {
       this.setPlayerState("run");

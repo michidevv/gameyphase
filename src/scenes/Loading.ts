@@ -7,11 +7,6 @@ export class LoadingScene extends Phaser.Scene {
 
   preload() {
     this.load.baseURL = "/assets/";
-    this.load.atlas(
-      "a-king",
-      "spritesheets/a-king.png",
-      "spritesheets/a-king_atlas.json"
-    );
     this.load.image({
       key: "tiles",
       url: "tilemaps/tiles/dungeon-16-16.png",
@@ -21,6 +16,14 @@ export class LoadingScene extends Phaser.Scene {
       frameHeight: 16,
       frameWidth: 16,
     });
+    this.load.spritesheet(
+      "tiles_spr_char",
+      "tilemaps/tiles/dungeon-16-16.png",
+      {
+        frameHeight: 32,
+        frameWidth: 16,
+      }
+    );
     this.load.plugin(
       "rexvirtualjoystickplugin",
       "scripts/rexvirtualjoystickplugin.min.js"

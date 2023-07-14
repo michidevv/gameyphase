@@ -6,6 +6,7 @@ import { GameEndStatus } from "../types/GameEvent";
 import { SCENES } from "./scenes";
 import { animateText } from "../utils/typewriter";
 import { COLORS } from "../ui/colors";
+import { TextKeys, getTranslation } from "../utils/i18n";
 
 const TEXT_DIALOG_CONF = {
   padding: 12,
@@ -62,8 +63,9 @@ export class HudScene extends Scene {
   };
 
   private showTextDialogHandler = ({ text }: { text: string }) => {
+    const copy = getTranslation(text as TextKeys);
     if (this.textDialog) {
-      this.textDialog.textElm.text = text;
+      this.textDialog.textElm.text = copy;
 
       this.textDialog.dialog.setVisible(true);
       this.textDialog.textElm.setVisible(true);
@@ -87,7 +89,7 @@ export class HudScene extends Scene {
           this,
           x + TEXT_DIALOG_CONF.padding,
           y + TEXT_DIALOG_CONF.padding,
-          text,
+          copy,
           {
             fontSize: 18,
             wordWrap: { width: width - TEXT_DIALOG_CONF.padding * 2 },

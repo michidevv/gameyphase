@@ -33,7 +33,7 @@ export class PlaygroundScene extends Scene {
       (o) => o.name === "ChestPoint"
     ) as ObjectPoint[];
 
-    this.chests = chestPoints.map((p) => {
+    this.chests = chestPoints.map((p, i) => {
       const chest = this.physics.add
         .sprite(p.x, p.y, "tiles_spr", 595)
         .setScale(1.5);
@@ -45,7 +45,7 @@ export class PlaygroundScene extends Scene {
         collider.active = false;
         emitEvent(this.game.events, {
           type: "show-text-dialog",
-          data: { text: "Test dialog text" },
+          data: { text: `note_${i + 1}` },
         });
         const timer = this.time.addEvent({
           delay: 1000,

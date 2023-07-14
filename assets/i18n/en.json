@@ -3,5 +3,6 @@
   "note_2": "Note 2",
   "note_3": "Note 3",
   "note_4": "Note 4",
-  "game_complete": "Thank you for playing the game"
+  "game_completed": "Thank you for playing the game",
+  "score": "Chests discovered: {value}"
 }

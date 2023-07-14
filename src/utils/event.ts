@@ -5,20 +5,14 @@ export function emitEvent(
   event: GameEvent
 ) {
   switch (event.type) {
-    case "chest-loot":
-      emitter.emit(event.type);
-      break;
-    case "game-end":
-      emitter.emit(event.type, event.data);
-      break;
+    case "chest-found":
+    case "game-completed":
     case "attack":
+    case "hide-text-dialog":
       emitter.emit(event.type);
       break;
     case "show-text-dialog":
       emitter.emit(event.type, event.data);
-      break;
-    case "hide-text-dialog":
-      emitter.emit(event.type);
       break;
     default:
       console.warn("Unknown event", event);

@@ -2,7 +2,6 @@ import { Scene, Tilemaps } from "phaser";
 import { Player } from "../entities/Player";
 import { ObjectPoint } from "../types/ObjectPoint";
 import { emitEvent } from "../utils/event";
-import { Enemy } from "../entities/Enemy";
 import { VirtualJoyStick } from "../types/VirtualJoyStick";
 import { SCENES } from "./scenes";
 import { attachTouchListener } from "../utils/touchDetector";
@@ -16,7 +15,6 @@ export class PlaygroundScene extends Scene {
   private wallsLayer!: Tilemaps.TilemapLayer;
   private chests!: Phaser.GameObjects.Sprite[];
   private chestLights!: Phaser.GameObjects.Light[];
-  private enemies!: Enemy[];
   private virtualJoystick?: VirtualJoyStick;
 
   constructor() {
@@ -50,7 +48,8 @@ export class PlaygroundScene extends Scene {
 
       chest.body.setAllowGravity(false);
       const collider = this.physics.add.overlap(this.player, chest, () => {
-        // emitEvent(this.game.events, { type: "chest-loot" });
+        // TODO: Need to fix, emit only once per chest
+        emitEvent(this.game.events, { type: "chest-found" });
         chest.setTexture("tiles_spr", 597);
         collider.active = false;
         this.chestLights[i]?.setIntensity(0);
@@ -139,24 +138,6 @@ export class PlaygroundScene extends Scene {
     this.showDebugWalls();
   }
 
-  private initEnemies() {
-    const enemyPoints = this.map.filterObjects(
-      "Enemies",
-      (o) => o.name === "EnemyPoint"
-    ) as ObjectPoint[];
-
-    this.enemies = enemyPoints.map((p) =>
-      new Enemy(this.player, this, p.x, p.y, "tiles_spr", 251)
-        .setName(p.id.toString())
-        .setScale(1.5)
-    );
-    this.physics.add.collider(this.enemies, this.wallsLayer);
-    this.physics.add.collider(this.enemies, this.enemies);
-    this.physics.add.collider(this.player, this.enemies, (p) =>
-      (p as Player).getDamage(1)
-    );
-  }
-
   private showDebugWalls() {
     const debugGraphics = this.add.graphics().setAlpha(0.7);
     this.wallsLayer.renderDebug(debugGraphics, {
@@ -170,7 +151,6 @@ export class PlaygroundScene extends Scene {
     this.initCamera();
     this.initTouchControls();
     this.initPlayer();
-    this.initEnemies();
     this.initChests();
     this.initLight();
   }

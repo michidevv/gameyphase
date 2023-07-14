@@ -1,5 +1,4 @@
 import { VJoystickCursorKeys } from "../types/VirtualJoyStick";
-import { Text } from "../ui/Text";
 import { emitEvent } from "../utils/event";
 import { Actor } from "./Actor";
 
@@ -11,8 +10,6 @@ export class Player extends Actor {
   >;
 
   private playerState: "idle" | "run" | "attack" = "idle";
-
-  private hpValue: Text;
 
   constructor(
     scene: Phaser.Scene,
@@ -45,12 +42,7 @@ export class Player extends Actor {
       emitEvent(this.scene.game.events, { type: "attack" });
     });
 
-    this.hpValue = new Text(
-      this.scene,
-      this.x,
-      this.y - this.height * 0.4,
-      this.hp.toString()
-    ).setFontSize(9);
+    this.setDepth(1);
   }
 
   private initAnimation() {
@@ -152,21 +144,6 @@ export class Player extends Actor {
       this.setPlayerState("run");
     } else {
       this.setPlayerState("idle");
-    }
-
-    this.hpValue
-      .setPosition(this.x, this.y - this.height * 0.4)
-      .setOrigin(0.8, 0.5);
-  }
-
-  getDamage(value?: number): void {
-    super.getDamage(value);
-    this.hpValue.setText(this.hp.toString());
-    if (this.hp <= 0) {
-      emitEvent(this.scene.game.events, {
-        type: "game-end",
-        data: { status: "lose" },
-      });
     }
   }
 }

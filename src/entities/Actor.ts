@@ -16,24 +16,6 @@ export class Actor extends Physics.Arcade.Sprite {
     this.getBody().setAllowGravity(false);
   }
 
-  getDamage(value?: number) {
-    this.scene.tweens.add({
-      targets: this,
-      duration: 100,
-      repeat: 3,
-      yoyo: true,
-      alpha: 0.5,
-      onStart: () => {
-        if (value) {
-          this.hp -= value;
-        }
-      },
-      onComplete: () => {
-        this.setAlpha(1);
-      },
-    });
-  }
-
   getHpValue(): number {
     return this.hp;
   }

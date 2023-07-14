@@ -1,3 +1,4 @@
+import { getTranslation } from "../utils/i18n";
 import { Text } from "./Text";
 
 export type ScoreOp = "increase" | "decrease" | "set";
@@ -9,7 +10,12 @@ export class Score extends Text {
     y: number,
     private scoreValue = 0
   ) {
-    super(scene, x, y, `Score: ${scoreValue}`);
+    super(
+      scene,
+      x,
+      y,
+      getTranslation("score", { value: scoreValue.toString() })
+    );
   }
 
   changeValue(op: ScoreOp, value: number) {
@@ -28,7 +34,9 @@ export class Score extends Text {
         break;
     }
 
-    this.setText(`Score ${this.scoreValue}`);
+    this.setText(
+      getTranslation("score", { value: this.scoreValue.toString() })
+    );
   }
 
   getValue(): number {

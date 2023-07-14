@@ -10,7 +10,7 @@ export class Text extends GameObjects.Text {
   ) {
     super(scene, x, y, text, {
       fontFamily: "RetroFont",
-      fontSize: "calc(100dvw / 43)",
+      fontSize: 18,
       color: "#fff",
       stroke: "#000",
       strokeThickness: 3,

@@ -38,7 +38,7 @@ export class HudScene extends Scene {
       getTranslation("game_completed")
     ).setAlign("center");
 
-    this.input.keyboard?.once("keydown-R", () => {
+    this.input.once("pointerdown", () => {
       detachListener(this.game.events, "chest-found", this.chestLootHandler);
       detachListener(
         this.game.events,

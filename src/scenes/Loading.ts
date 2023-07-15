@@ -6,7 +6,7 @@ export class LoadingScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.baseURL = "/assets/";
+    this.load.baseURL = "./assets/";
     this.load.image({
       key: "tiles",
       url: "tilemaps/tiles/dungeon-16-16.png",

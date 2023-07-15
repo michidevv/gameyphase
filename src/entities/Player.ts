@@ -4,7 +4,7 @@ import { Actor } from "./Actor";
 const VELOCITY = 130;
 export class Player extends Actor {
   private keys!: Record<
-    "W" | "A" | "S" | "D",
+    "W" | "A" | "S" | "D" | "UP" | "LEFT" | "DOWN" | "RIGHT",
     Phaser.Input.Keyboard.Key | undefined
   >;
 
@@ -28,6 +28,10 @@ export class Player extends Actor {
       A: keyboard?.addKey("A"),
       S: keyboard?.addKey("S"),
       D: keyboard?.addKey("D"),
+      UP: keyboard?.addKey("UP"),
+      LEFT: keyboard?.addKey("LEFT"),
+      DOWN: keyboard?.addKey("DOWN"),
+      RIGHT: keyboard?.addKey("RIGHT"),
     };
 
     this.getBody().setSize(16, 20);
@@ -77,19 +81,33 @@ export class Player extends Actor {
   }
 
   private isUp() {
-    return this.keys.W?.isDown || this.cursorKeys?.up.isDown;
+    return (
+      this.keys.UP?.isDown || this.keys.W?.isDown || this.cursorKeys?.up.isDown
+    );
   }
 
   private isLeft() {
-    return this.keys.A?.isDown || this.cursorKeys?.left.isDown;
+    return (
+      this.keys.LEFT?.isDown ||
+      this.keys.A?.isDown ||
+      this.cursorKeys?.left.isDown
+    );
   }
 
   private isDown() {
-    return this.keys.S?.isDown || this.cursorKeys?.down.isDown;
+    return (
+      this.keys.DOWN?.isDown ||
+      this.keys.S?.isDown ||
+      this.cursorKeys?.down.isDown
+    );
   }
 
   private isRight() {
-    return this.keys.D?.isDown || this.cursorKeys?.right.isDown;
+    return (
+      this.keys.RIGHT?.isDown ||
+      this.keys.D?.isDown ||
+      this.cursorKeys?.right.isDown
+    );
   }
 
   update() {

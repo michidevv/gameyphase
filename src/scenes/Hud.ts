@@ -35,7 +35,8 @@ export class HudScene extends Scene {
       this,
       this.game.scale.width / 2,
       this.game.scale.height * 0.2,
-      getTranslation("game_completed")
+      getTranslation("game_completed"),
+      { fontSize: 28 }
     )
       .setAlign("center")
       .setOrigin(0.5);
@@ -92,7 +93,7 @@ export class HudScene extends Scene {
           y + TEXT_DIALOG_CONF.padding,
           copy,
           {
-            fontSize: 18,
+            fontSize: 17,
             wordWrap: { width: width - TEXT_DIALOG_CONF.padding * 2 },
           }
         ),

@@ -1,4 +1,4 @@
-import en from "../../assets/i18n/en.json";
+import en from "../../public/assets/i18n/en.json";
 
 export type TextKeys = keyof typeof en;
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="18">
  <editorsettings>
-  <export target="../../assets/tilemaps/json/dungeon.json" format="json"/>
+  <export target="../../public/assets/tilemaps/json/dungeon.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
-  <image source="../../assets/tilemaps/tiles/dungeon-16-16.png" width="512" height="512"/>
+  <image source="../../public/assets/tilemaps/tiles/dungeon-16-16.png" width="512" height="512"/>
   <tile id="0">
    <properties>
     <property name="collides" type="bool" value="false"/>

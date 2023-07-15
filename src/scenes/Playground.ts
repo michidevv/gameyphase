@@ -95,8 +95,8 @@ export class PlaygroundScene extends Scene {
       x: this.cameras.main.displayWidth / 2 + 60,
       y:
         this.cameras.main.displayHeight + this.cameras.main.displayHeight / 3.5,
-      base: this.add.circle(0, 0, radius, COLORS.grey, 0.3),
-      thumb: this.add.circle(0, 0, radius / 2, COLORS.lightGrey, 0.4),
+      base: this.add.circle(0, 0, radius, COLORS.grey, 0.4),
+      thumb: this.add.circle(0, 0, radius / 2, COLORS.lightGrey, 0.7),
     });
     this.virtualJoystick?.setVisible(false);
   }

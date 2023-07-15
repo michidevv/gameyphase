@@ -9,7 +9,7 @@ import { TextKeys, getTranslation } from "../utils/i18n";
 
 const TEXT_DIALOG_CONF = {
   padding: 12,
-  height: 250,
+  height: 300,
 };
 
 export class HudScene extends Scene {
@@ -93,7 +93,7 @@ export class HudScene extends Scene {
           y + TEXT_DIALOG_CONF.padding,
           copy,
           {
-            fontSize: 20,
+            fontSize: 24,
             wordWrap: { width: width - TEXT_DIALOG_CONF.padding * 2 },
           }
         ),

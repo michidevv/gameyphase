@@ -137,15 +137,6 @@ export class PlaygroundScene extends Scene {
       this.wallsLayer.width,
       this.wallsLayer.height
     );
-    this.showDebugWalls();
-  }
-
-  private showDebugWalls() {
-    const debugGraphics = this.add.graphics().setAlpha(0.7);
-    this.wallsLayer.renderDebug(debugGraphics, {
-      tileColor: null,
-      collidingTileColor: new Phaser.Display.Color(243, 234, 48),
-    });
   }
 
   create() {

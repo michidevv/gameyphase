@@ -93,7 +93,7 @@ export class HudScene extends Scene {
           y + TEXT_DIALOG_CONF.padding,
           copy,
           {
-            fontSize: 17,
+            fontSize: 20,
             wordWrap: { width: width - TEXT_DIALOG_CONF.padding * 2 },
           }
         ),

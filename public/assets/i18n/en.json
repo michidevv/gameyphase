@@ -1,9 +1,10 @@
 {
-  "note_1": "Note 1\nHello, my name is Philipp Klochkov. And welcome to this humble portfolio project.\nI appreciate your trying it out.\nPlease try looking for more chests to find additional information.\n\n(You can play on your desktop or mobile)",
+  "note_1": "Note 1\nHello, my name is Philipp Klochkov. And welcome to this humble portfolio project.\nI appreciate your trying it out.\nPlease try looking for more chests to find additional information.",
   "note_2": "Note 2\nI started my career as a .NET developer back in 2015 and got my Master's degree in Computer Science in early 2016.\nDuring 2016 my focus shifted to JavaScript, specifically Angular and React on frontend and Node.js for backend.\nThis also helped me to start working on React Native and Native Android (Java/Kotlin) projects. During 2015 - 2019 I had an opportunity to work with lots of technologies in the company I worked.",
   "note_3": "Note 3\nIn early 2020 I started working in a different company (SaaS product).\nThis introduced AWS(with miriads of services), TypeScript (backend/frontend) and Scala with DynamoDB/PostgreSQL on backend to my technology stack.\nMy main duties consist of maintaining Scala based microservices, Node.js lambdas on backend and Typescript React.js and Next.js applications on frontend.",
   "note_4": "Note 4\nSome of more notable features I've been working on lately:\n- implemented refresh/access(bearer) tokens to the application, updating the login flow (backend and frontend)\n- implemented from scratch (and maintaining) AWS Lambda functions and setting up deployment pipeline using GH Actions and CloudFormation\n- implemented OTC (one-time code) as an alternative sign-in method\nPlease see my CV for further details.",
   "game_completed": "Thank you for playing the game!\nClick or tap to restart",
   "score": "Chests discovered: {value}/{total}",
-  "loading": "Loading, please wait..."
+  "loading": "Loading, please wait...",
+  "guide": "Move your character with WASD or ARROW KEYS on desktop or tap the screen to display touch HUD on mobile."
 }

@@ -1,4 +1,5 @@
 import { VJoystickCursorKeys } from "../types/VirtualJoyStick";
+import { emitEvent } from "../utils/event";
 import { Actor } from "./Actor";
 
 const VELOCITY = 130;
@@ -133,6 +134,7 @@ export class Player extends Actor {
     }
     if (this.isUp() || this.isLeft() || this.isDown() || this.isRight()) {
       this.setPlayerState("run");
+      emitEvent(this.scene.game.events, { type: "player-move" });
     } else {
       this.setPlayerState("idle");
     }

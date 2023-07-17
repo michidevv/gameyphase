@@ -58,6 +58,7 @@ export class HudScene extends Scene {
         "hide-text-dialog",
         this.hideTextDialogHandler
       );
+      detachListener(this.game.events, "player-move", this.playerMoveHandler);
       this.textDialog = undefined;
       this.scene.get(SCENES.playground).scene.restart();
       this.scene.restart();
@@ -107,6 +108,10 @@ export class HudScene extends Scene {
     this.textDialog?.dialog.setVisible(false);
     this.textDialog?.textElm.setVisible(false);
   }
+  private playerMoveHandler() {
+    this.hideTextDialogHandler();
+    detachListener(this.game.events, "player-move", this.playerMoveHandler);
+  }
 
   private initListeners() {
     attachListener(
@@ -131,6 +136,12 @@ export class HudScene extends Scene {
       this.game.events,
       "hide-text-dialog",
       this.hideTextDialogHandler,
+      this
+    );
+    attachListener(
+      this.game.events,
+      "player-move",
+      this.playerMoveHandler,
       this
     );
   }

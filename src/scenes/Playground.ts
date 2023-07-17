@@ -146,6 +146,10 @@ export class PlaygroundScene extends Scene {
     this.initPlayer();
     this.initChests();
     this.initLight();
+    emitEvent(this.game.events, {
+      type: "show-text-dialog",
+      data: { text: "guide" },
+    });
   }
 
   update() {

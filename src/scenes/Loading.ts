@@ -42,7 +42,7 @@ export class LoadingScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start(SCENES.playground);
     this.scene.start(SCENES.hud);
+    this.scene.start(SCENES.playground);
   }
 }

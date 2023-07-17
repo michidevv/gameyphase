@@ -31,7 +31,7 @@ export class PlaygroundScene extends Scene {
     this.lights.enable().setAmbientColor(0xffffff);
 
     this.chestLights = this.chests.map((c) =>
-      this.lights.addLight(c.x, c.y, 40).setIntensity(2).setOrigin(0, 0)
+      this.lights.addLight(c.x, c.y, 45).setIntensity(3).setOrigin(0, 0)
     );
   }
 
